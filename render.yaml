@@ -1,0 +1,27 @@
+services:
+  # 1. El Backend (.NET API)
+  - type: web
+    name: posapp-backend
+    env: docker
+    region: ohio # Puedes cambiar a oregon o frankfurt según prefieras
+    plan: free # El plan gratuito de Render
+    rootDir: Backend # La carpeta donde está el Dockerfile
+    healthCheckPath: /swagger # o alguna ruta pública que tengas para que Render sepa que arrancó bien
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false # Deberás llenar el valor de tu conexión de Aiven en el panel de Render
+
+  # 2. El Frontend (Sitio Estático con Vite)
+  - type: web
+    name: posapp-frontend
+    env: static
+    region: ohio
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    # Redirigir todas las rutas al index.html (necesario para React Router o Vue Router)
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
