@@ -3,12 +3,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copia el archivo .csproj y restaura las dependencias
-COPY ["POSApp.API/POSApp.API.csproj", "POSApp.API/"]
-RUN dotnet restore "POSApp.API/POSApp.API.csproj"
+COPY ["Backend/POSApp.API/POSApp.API.csproj", "Backend/POSApp.API/"]
+RUN dotnet restore "Backend/POSApp.API/POSApp.API.csproj"
 
 # Copia el resto del código y compila
 COPY . .
-WORKDIR "/src/POSApp.API"
+WORKDIR "/src/Backend/POSApp.API"
 RUN dotnet build "POSApp.API.csproj" -c Release -o /app/build
 
 # Publica la aplicación
