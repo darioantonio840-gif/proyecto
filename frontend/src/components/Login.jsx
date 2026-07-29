@@ -46,7 +46,7 @@ const Login = () => {
       } else if (err.request) {
         // No response received (Network error / Backend down)
         setError('Error de conexión: No se pudo contactar al servidor backend.');
-        setErrorDetails(`No hubo respuesta de http://localhost:5124/api/auth/login. Verifica que el servidor Backend esté encendido.`);
+       setErrorDetails(`No hubo respuesta de ${import.meta.env.VITE_API_URL || 'tu servidor Backend'}. Verifica que el servidor esté encendido.`);
       } else {
         setError(`Error inesperado: ${err.message}`);
         setErrorDetails(err.toString());
